@@ -8,12 +8,10 @@ public class Main : MonoBehaviour
     public HandTracking htk;
     public HandInput hi;
 
-    public GameObject[] leftHandPoints;
-    public GameObject[] rightHandPoints;
-
     Process notepad;
     Process htkPyProcess;
 
+    WaitForSeconds WaitOneSec = new WaitForSeconds(1);
     void Start()
     {
         StartCoroutine(MainLoop());
@@ -30,7 +28,7 @@ public class Main : MonoBehaviour
         while (true)
         {
             htk.HandTrack();
-
+            hi.InputLoop();
             yield return null;
         }
     }

@@ -18,8 +18,8 @@ public class HandTracking : MonoBehaviour
     public GameObject[] rightHandObjs;
     public int argNum;
 
-    string[] lhPoints = null;
-    string[] rhPoints = null;
+    public string[] lhPoints;
+    public string[] rhPoints;
     public void HandTrack()
     {
         if (ur == null || ur.bytes == null) return;
@@ -62,7 +62,6 @@ public class HandTracking : MonoBehaviour
         //points[0~62] : landmark position
         //points[63] : left or right
         //points[64] : gesture
-        Debug.Log(points[64]);
 
         string[] lhPoints = new string[argNum];
         string[] rhPoints = new string[argNum];
