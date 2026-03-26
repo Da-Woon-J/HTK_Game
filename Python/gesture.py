@@ -35,3 +35,4 @@ def gestures(handsLM):
     if(pinch_Dis<pinch_Threshold):
         return 'Pinch'
     
+    return 'Default'
