@@ -48,7 +48,7 @@ public class HandTracking : MonoBehaviour
         string data = Encoding.Default.GetString(bytes);
 
         //인코딩한 데이터 일단 확인
-        //Debug.Log(data); 
+        //Debug.Log(data);
 
         data = data.Replace("[", " ")
                         .Replace("]", "")
@@ -59,9 +59,10 @@ public class HandTracking : MonoBehaviour
 
         string[] points = data.Split(",");
 
-        //data[0~62] : landmark position
-        //data[63] : left or right
-        //data[64] : gesture
+        //points[0~62] : landmark position
+        //points[63] : left or right
+        //points[64] : gesture
+        Debug.Log(points[64]);
 
         string[] lhPoints = new string[argNum];
         string[] rhPoints = new string[argNum];

@@ -39,12 +39,12 @@ public class Main : MonoBehaviour
     {
         ProcessStartInfo htk = new ProcessStartInfo();
         string pythonPath = "D:\\PycharmFiles\\HandTracking_Pycharm\\.venv2\\Scripts\\python.exe";
-        string scriptPath = "D:/PycharmFiles/HandTracking_Pycharm/htk_cam.py";
+        string scriptPath = "D:\\HtkProjectMain\\Python\\htk_cam.py";
 
         htk.FileName = pythonPath;
         htk.Arguments = scriptPath;
 
-        Process.Start(htk);
+        htkPyProcess = Process.Start(htk);
 
         yield return null;
     }
@@ -69,4 +69,12 @@ public class Main : MonoBehaviour
         yield return null;
     }
 
+    void OnApplicationQuit()
+    {
+        if (htkPyProcess == null)
+        {
+            return;
+        }
+        htkPyProcess.Kill();
+    }
 }
