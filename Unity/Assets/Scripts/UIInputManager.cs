@@ -19,7 +19,6 @@ public class UIInputManager : MonoBehaviour
         clickAction = uiAction.UI.click;
         hoverAction = uiAction.UI.hover;
     }
-    
     void Start()
     {
         Debug.Log("UIInputManager started");
@@ -31,7 +30,6 @@ public class UIInputManager : MonoBehaviour
     {
         
     }
-
     void OnEnable()
     {
         uiAction.Enable();

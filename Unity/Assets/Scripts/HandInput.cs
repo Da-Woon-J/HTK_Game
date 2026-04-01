@@ -1,53 +1,50 @@
+using System;
+using System.Collections;
+using UnityEditor.Build;
 using UnityEngine;
 
 public class HandInput : MonoBehaviour
 {
-    bool isPinching = false;
+    public HandTracking ht;
 
-    public float PinchDetect(GameObject[] handPoints)
+    public GameObject pinchSound;
+
+    WaitForSeconds WaitOneSec = new WaitForSeconds(1f);
+
+    [NonSerialized] public bool isLPinching = false;
+    [NonSerialized] public bool isRPinching = false;
+    [NonSerialized] public bool isLGrabbing = false;
+    [NonSerialized] public bool isRGrabbing = false;
+    public void InputLoop()
     {
-        GameObject indexTip = handPoints[8];
-        GameObject indexRoot = handPoints[5];
-        GameObject thumbTip = handPoints[4];
+        string[] lhPoints = ht.lhPoints;
+        string[] rhPoints = ht.rhPoints;
 
-        Vector3 itPos = indexTip.transform.position;
-        Vector3 irPos = indexRoot.transform.position;
-        Vector3 ttPos = thumbTip.transform.position;
+        GestureDetect(lhPoints, "'Pinch'", ref isLPinching);
+        GestureDetect(rhPoints, "'Pinch'", ref isRPinching);
 
-        float pinchDis = Vector3.Distance(itPos, ttPos);
-        float indexLen = Vector3.Distance(itPos, irPos);
-
-        //Debug.Log("pinch distance:" + pinchDis);
-        return pinchDis;
+        GestureDetect(lhPoints, "'Grab'", ref isLGrabbing);
+        GestureDetect(rhPoints, "'Grab'", ref isRGrabbing);
     }
-    public void PinchOnetime(GameObject[] handPoints)
+    public void GestureDetect(string[] handPoints, string tarGesture, ref bool isDoing)
     {
-        float dis = PinchDetect(handPoints);
 
-        if (dis == 0) return;
-        if(dis < 0.5 && !isPinching)
-        {
-            Debug.Log("pinched");
-            isPinching = true;
-        }
-        else if (dis > 0.5)
-        {
-            isPinching = false;
-        }
-        else { }
-    }
+        if (handPoints == null || handPoints.Length < 64) return;
 
-    public void PinchHold(GameObject[] handPoints)
-    {
-        float dis = PinchDetect(handPoints);
-        if(dis < 0.5)
+        string gesture = handPoints[64];
+        if (gesture == tarGesture)
         {
-            Debug.Log("are ya Draggin");
+            if (!isDoing)
+            {
+                //Debug.Log("HandInput: " + tarGesture);
+                pinchSound.GetComponent<AudioSource>().Play();
+                isDoing = true;
+            }
+        }
+        else
+        {
+            isDoing = false;
         }
     }
 
-    public void PushDetect()
-    {
-
-    }
 }

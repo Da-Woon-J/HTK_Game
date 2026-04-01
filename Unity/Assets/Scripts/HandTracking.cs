@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Security.Cryptography;
+using System;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -16,10 +17,17 @@ public class HandTracking : MonoBehaviour
     public UdpReceiver ur;
     public GameObject[] leftHandObjs;
     public GameObject[] rightHandObjs;
+    public GameObject leftMiddlePalm;
+    public GameObject rightMiddlePalm;
+
     public int argNum;
 
-    string[] lhPoints = null;
-    string[] rhPoints = null;
+    [NonSerialized] public string[] lhPoints;
+    [NonSerialized] public string[] rhPoints;
+    [NonSerialized] public string lhGesture;
+    [NonSerialized] public string rhGesture;
+    
+
     public void HandTrack()
     {
         if (ur == null || ur.bytes == null) return;
@@ -33,12 +41,24 @@ public class HandTracking : MonoBehaviour
         if (lhPoints[33] == null) { }
         else {
             HandObjsSync(lhPoints, leftHandObjs);
+            Vector3 lhoPos0 = leftHandObjs[0].transform.position;
+            Vector3 lhoPos9 = leftHandObjs[9].transform.position;
+            Vector3 lmpPos = (lhoPos0 + lhoPos9) / 2;
+            leftMiddlePalm.transform.position = lmpPos;
+
+            lhGesture = lhPoints[64];
             //Debug.Log(lhPoints[64]);
         }
 
         if (rhPoints[33] == null) { }
         else {
             HandObjsSync(rhPoints, rightHandObjs);
+            Vector3 rhoPos0 = rightHandObjs[0].transform.position;
+            Vector3 rhoPos9 = rightHandObjs[9].transform.position;
+            Vector3 rmpPos = (rhoPos0 + rhoPos9) / 2;
+            rightMiddlePalm.transform.position = rmpPos;
+
+            rhGesture = rhPoints[64];
             //Debug.Log(lhPoints[64]);
         }
     }
@@ -48,7 +68,7 @@ public class HandTracking : MonoBehaviour
         string data = Encoding.Default.GetString(bytes);
 
         //인코딩한 데이터 일단 확인
-        //Debug.Log(data); 
+        //Debug.Log(data);
 
         data = data.Replace("[", " ")
                         .Replace("]", "")
@@ -59,9 +79,9 @@ public class HandTracking : MonoBehaviour
 
         string[] points = data.Split(",");
 
-        //data[0~62] : landmark position
-        //data[63] : left or right
-        //data[64] : gesture
+        //points[0~62] : landmark position
+        //points[63] : left or right
+        //points[64] : gesture
 
         string[] lhPoints = new string[argNum];
         string[] rhPoints = new string[argNum];

@@ -1,0 +1,34 @@
+{
+    "type" : "array",
+    "items" : {
+        "type" : "object",
+        "required" : ["hand", "gesture","landmarks"],
+        "properties" : {
+            "hand" : {
+                "type" : "string",
+                "enum" : ["Left", "Right"]        
+            },
+            "gesture" : {
+                "type" : "string",
+                "enum" : ["Default","Pinch","Grab"]
+            },
+            "landmarks" : {
+                "type" : "array",
+                "minItems" : 21,
+                "maxItems" : 21,
+                "items": {
+                    "type" : "array",
+                    "prefixItems" : [
+                        {"type" : "integer", "description" : "xpos"},
+                        {"type" : "integer", "description" : "ypos"},
+                        {"type" : "integer", "description" : "zpos"}
+                    ],
+                    "minItems" : 3,
+                    "maxItems" : 3,
+                    "items" : false                    
+                }
+            }
+        },
+        "additionalProperties" : false
+    }
+}
