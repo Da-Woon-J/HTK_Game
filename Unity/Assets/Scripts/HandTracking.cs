@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Security.Cryptography;
+using System;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -16,10 +17,17 @@ public class HandTracking : MonoBehaviour
     public UdpReceiver ur;
     public GameObject[] leftHandObjs;
     public GameObject[] rightHandObjs;
+    public GameObject leftMiddlePalm;
+    public GameObject rightMiddlePalm;
+
     public int argNum;
 
-    public string[] lhPoints;
-    public string[] rhPoints;
+    [NonSerialized] public string[] lhPoints;
+    [NonSerialized] public string[] rhPoints;
+    [NonSerialized] public string lhGesture;
+    [NonSerialized] public string rhGesture;
+    
+
     public void HandTrack()
     {
         if (ur == null || ur.bytes == null) return;
@@ -33,12 +41,24 @@ public class HandTracking : MonoBehaviour
         if (lhPoints[33] == null) { }
         else {
             HandObjsSync(lhPoints, leftHandObjs);
+            Vector3 lhoPos0 = leftHandObjs[0].transform.position;
+            Vector3 lhoPos9 = leftHandObjs[9].transform.position;
+            Vector3 lmpPos = (lhoPos0 + lhoPos9) / 2;
+            leftMiddlePalm.transform.position = lmpPos;
+
+            lhGesture = lhPoints[64];
             //Debug.Log(lhPoints[64]);
         }
 
         if (rhPoints[33] == null) { }
         else {
             HandObjsSync(rhPoints, rightHandObjs);
+            Vector3 rhoPos0 = rightHandObjs[0].transform.position;
+            Vector3 rhoPos9 = rightHandObjs[9].transform.position;
+            Vector3 rmpPos = (rhoPos0 + rhoPos9) / 2;
+            rightMiddlePalm.transform.position = rmpPos;
+
+            rhGesture = rhPoints[64];
             //Debug.Log(lhPoints[64]);
         }
     }

@@ -16,10 +16,7 @@ public class Main : MonoBehaviour
     {
         StartCoroutine(MainLoop());
     }
-    void Update()
-    {
-        
-    }
+
     IEnumerator MainLoop()
     {
         //yield return BootHtkPy();
