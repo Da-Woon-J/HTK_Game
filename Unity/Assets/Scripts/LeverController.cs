@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class LeverController : MonoBehaviour 
 {
+    GameObject leverAnchor;
     public GameObject leftMiddlePalm;
     public GameObject rightMiddlePalm;
     SphereCollider lmdpCollider;
@@ -13,6 +14,8 @@ public class LeverController : MonoBehaviour
 
     private void Start()
     {
+        leverAnchor = transform.Find("LeverAnchor").gameObject;
+
         lmdpCollider = leftMiddlePalm.GetComponent<SphereCollider>();
         rmdpCollider = rightMiddlePalm.GetComponent<SphereCollider>();
     }
