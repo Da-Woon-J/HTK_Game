@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class LeverController : MonoBehaviour 
 {
+    public float minAngle = -30;
+    public float maxAngle = -150;
+    private float startAngle;
+
     GameObject leverAnchor;
     public GameObject leftMiddlePalm;
     public GameObject rightMiddlePalm;
@@ -18,6 +22,8 @@ public class LeverController : MonoBehaviour
 
         lmdpCollider = leftMiddlePalm.GetComponent<SphereCollider>();
         rmdpCollider = rightMiddlePalm.GetComponent<SphereCollider>();
+
+        startAngle = transform.rotation.x;
     }
     void Update()
     {
@@ -36,7 +42,14 @@ public class LeverController : MonoBehaviour
 
         if (isGrabbing)
         {
-            transform.position = middlePalm.transform.position;
+            float currentAngle = GetAngle(middlePalm);
+            float targetAngle = currentAngle - startAngle;
+
+            if (targetAngle > 180) targetAngle -= 360;
+
+            float clampedAngle = Mathf.Clamp(targetAngle, minAngle, maxAngle);
+
+            transform.localRotation = Quaternion.Euler(clampedAngle, 0, 0);
         }
     }
 
@@ -58,5 +71,15 @@ public class LeverController : MonoBehaviour
     {
         if (collision.collider == lmdpCollider) isGrabbing = false;
         if (collision.collider == rmdpCollider) isGrabbing = false;
+    }
+
+    float GetAngle(GameObject middlePalm)
+    {
+        Vector3 handPos = middlePalm.transform.position;
+        Vector3 anchor = leverAnchor.transform.position;
+
+        Vector3 direction = handPos - anchor;
+
+        return Mathf.Atan2(direction.y, direction.z);
     }
 }
