@@ -16,9 +16,6 @@ def gestures(handsLM):
     ring_mcp = handsLM[13]
     pinky_mcp = handsLM[17]
 
-    hand_size = vector.Euclidean_Dis(middle_mcp, wrist)
-    print(hand_size)
-
     fingerLen_List = [
         vector.Euclidean_Dis(thumb_tip, thumb_mcp),
         vector.Euclidean_Dis(index_tip, index_mcp),
@@ -34,7 +31,7 @@ def gestures(handsLM):
         vector.Euclidean_Dis(ring_tip, wrist),
         vector.Euclidean_Dis(pinky_tip, wrist)
     ]
-    grab_Threshold = 150
+    grab_Threshold = 160
     grab_Checksum = 0
     for grab in grab_List:
          if(grab<grab_Threshold):
@@ -43,7 +40,7 @@ def gestures(handsLM):
          return 'Grab'
 
     pinch_Dis = vector.Euclidean_Dis(thumb_tip,index_tip)
-    pinch_Threshold = 50
+    pinch_Threshold = 30
     if(pinch_Dis<pinch_Threshold):
         return 'Pinch'
     

@@ -1,6 +1,6 @@
 import socket
 
-address = '112.76.56.77'
+address = '127.0.0.1'
 send_port = 50000
 recv_port = 50001
 send_address = (address,send_port)

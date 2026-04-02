@@ -47,7 +47,7 @@ public class HandTracking : MonoBehaviour
             leftMiddlePalm.transform.position = lmpPos;
 
             lhGesture = lhPoints[64];
-            //Debug.Log(lhPoints[64]);
+            Debug.Log(lhPoints[64]);
         }
 
         if (rhPoints[33] == null) { }
