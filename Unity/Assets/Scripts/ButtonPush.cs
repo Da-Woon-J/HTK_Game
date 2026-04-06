@@ -11,9 +11,10 @@ public class ButtonPush : MonoBehaviour
     SphereCollider idtCollider;
 
     public float buttonSpeed = 0.5f;
+    public float buttonDepth;
 
     Vector3 initPos;
-    public Vector3 endPos;          
+    Vector3 endPos;
 
     Coroutine activeRoutine;
 
@@ -21,6 +22,7 @@ public class ButtonPush : MonoBehaviour
     {
         idtCollider = indexTip.GetComponent<SphereCollider>();
         initPos = transform.position;
+        endPos = new Vector3(transform.position.x, transform.position.y - buttonDepth, transform.position.z);
     }
 
     private void OnCollisionEnter(Collision collision)

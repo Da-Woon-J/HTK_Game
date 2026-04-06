@@ -1,85 +1,42 @@
+using System;
 using UnityEngine;
 
-public class LeverController : MonoBehaviour 
+public class LeverController : MonoBehaviour
 {
-    public float minAngle = -30;
-    public float maxAngle = -150;
-    private float startAngle;
-
-    GameObject leverAnchor;
-    public GameObject leftMiddlePalm;
-    public GameObject rightMiddlePalm;
-    SphereCollider lmdpCollider;
-    SphereCollider rmdpCollider;
-
     public HandTracking htk;
+    public GameObject rmdp;
+    public GameObject lmdp;
+    public float maxYPos;
+    public float minYPos;
 
-    bool isGrabbing = false;
-
-    private void Start()
+    Collider rmdpCollider;
+    Collider lmdpCollider;
+    string lhGesture;
+    string rhGesture;
+    void Start()
     {
-        leverAnchor = transform.Find("LeverAnchor").gameObject;
-
-        lmdpCollider = leftMiddlePalm.GetComponent<SphereCollider>();
-        rmdpCollider = rightMiddlePalm.GetComponent<SphereCollider>();
-
-        startAngle = transform.rotation.x;
+        rmdpCollider = rmdp.GetComponent<Collider>();
+        lmdpCollider = lmdp.GetComponent<Collider>();
     }
-    void Update()
+    private void OnTriggerStay(Collider other)
     {
-        string lhGesture = htk.lhGesture;
-        string rhGesture = htk.rhGesture;
-        LeverAction(leftMiddlePalm, lhGesture);
-        LeverAction(rightMiddlePalm, rhGesture);
-    }
-
-    void LeverAction(GameObject middlePalm, string gesture)
-    {
-        //if (gesture != "'Grab'")
-        //{
-        //    return;
-        //}
-
-        if (isGrabbing)
+        if (other == rmdpCollider && htk.rhGesture == "'Grab'")
         {
-            float currentAngle = GetAngle(middlePalm);
-            float targetAngle = currentAngle - startAngle;
-
-            if (targetAngle > 180) targetAngle -= 360;
-
-            float clampedAngle = Mathf.Clamp(targetAngle, minAngle, maxAngle);
-
-            transform.localRotation = Quaternion.Euler(clampedAngle, 0, 0);
+            LeverLogic(rmdpCollider);
+        }
+        else if (other == lmdpCollider && htk.lhGesture == "'Grab'")
+        {
+            LeverLogic(lmdpCollider);
         }
     }
 
-    void OnCollisionStay(Collision collision)
+    void LeverLogic(Collider collider)
     {
-        if (collision.collider == lmdpCollider)
-        {
-            Debug.Log("hittin left palm");
-            isGrabbing = true;
-        }
-        if (collision.collider == rmdpCollider)
-        {
-            Debug.Log("hittin right palm");
-            isGrabbing = true;
-        }
-    }
+        Vector3 op = collider.transform.position;
+        Vector3 localPos = transform.parent.InverseTransformPoint(op);
+        float constY = Mathf.Clamp(localPos.y, minYPos, maxYPos);
+        float smoothY = Mathf.Lerp(transform.localPosition.y, constY, Time.deltaTime * 10f);
 
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.collider == lmdpCollider) isGrabbing = false;
-        if (collision.collider == rmdpCollider) isGrabbing = false;
-    }
-
-    float GetAngle(GameObject middlePalm)
-    {
-        Vector3 handPos = middlePalm.transform.position;
-        Vector3 anchor = leverAnchor.transform.position;
-
-        Vector3 direction = handPos - anchor;
-
-        return Mathf.Atan2(direction.y, direction.z);
+        transform.localPosition = new Vector3(transform.localPosition.x, smoothY, transform.localPosition.z);
     }
 }
