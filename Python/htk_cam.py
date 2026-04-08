@@ -38,8 +38,8 @@ while True:
             gesture_1 = gesture.gestures(lm_1)
             data.extend([lm_1,type_1,gesture_1])
 
-        print(data)
-        udp_socket.send_udp(data)
+    print(data)
+    udp_socket.send_udp(data)
 
     # 핸드 트래킹 디버그
     cv2.imshow("Hand Tracking", img)

@@ -16,13 +16,19 @@ public class HandTracking : MonoBehaviour
     public float zScale;
 
     public UdpReceiver ur;
+    //손의 랜드마크들의 부모 게임오브젝트
     public GameObject leftHand;
     public GameObject rightHand;
+    //손의 랜드마크들
     public GameObject[] leftHandObjs;
     public GameObject[] rightHandObjs;
+    //손바닥 랜드마크
     public GameObject leftMiddlePalm;
     public GameObject rightMiddlePalm;
-
+    //손의 모델링
+    public GameObject lhModel;
+    public GameObject rhModel;
+    //손 데이터가 전달하는 최대 데이터 개수
     public int argNum;
 
     [NonSerialized] public string[] lhPoints;
@@ -44,11 +50,11 @@ public class HandTracking : MonoBehaviour
 
         if (lhPoints[33] == null) 
         {
-            leftHand.SetActive(false);
+            lhModel.SetActive(false);
         }
         else {
 
-            if (!leftHand.activeSelf) leftHand.SetActive(true);
+            if (!lhModel.activeSelf) lhModel.SetActive(true);
 
             HandObjsSync(lhPoints, leftHandObjs);
             Vector3 lhoPos0 = leftHandObjs[0].transform.position;
@@ -62,11 +68,11 @@ public class HandTracking : MonoBehaviour
 
         if (rhPoints[33] == null) 
         {
-            rightHand.SetActive(false);
+            rhModel.SetActive(false);
         }
         else {
 
-            if (!rightHand.activeSelf) rightHand.SetActive(true);
+            if (!rhModel.activeSelf) rhModel.SetActive(true);
 
             HandObjsSync(rhPoints, rightHandObjs);
             Vector3 rhoPos0 = rightHandObjs[0].transform.position;
