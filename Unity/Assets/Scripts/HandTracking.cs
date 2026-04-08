@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Unity.VisualScripting;
 
 public class HandTracking : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class HandTracking : MonoBehaviour
     public float zScale;
 
     public UdpReceiver ur;
+    public GameObject leftHand;
+    public GameObject rightHand;
     public GameObject[] leftHandObjs;
     public GameObject[] rightHandObjs;
     public GameObject leftMiddlePalm;
@@ -31,15 +34,22 @@ public class HandTracking : MonoBehaviour
     public void HandTrack()
     {
         if (ur == null || ur.bytes == null) return;
-        if (ur.isHandData == false) return;
+        //if (ur.isHandData == false) return;
         (lhPoints, rhPoints) = ProcessByteHand(ur.bytes);
         if (debug)
         {
             Debug.Log(lhPoints[33]);
             Debug.Log(rhPoints[33]);
         }
-        if (lhPoints[33] == null) { }
+
+        if (lhPoints[33] == null) 
+        {
+            leftHand.SetActive(false);
+        }
         else {
+
+            if (!leftHand.activeSelf) leftHand.SetActive(true);
+
             HandObjsSync(lhPoints, leftHandObjs);
             Vector3 lhoPos0 = leftHandObjs[0].transform.position;
             Vector3 lhoPos9 = leftHandObjs[9].transform.position;
@@ -47,11 +57,17 @@ public class HandTracking : MonoBehaviour
             leftMiddlePalm.transform.position = lmpPos;
 
             lhGesture = lhPoints[64];
-            Debug.Log(lhPoints[64]);
+            //Debug.Log(lhPoints[64]);
         }
 
-        if (rhPoints[33] == null) { }
+        if (rhPoints[33] == null) 
+        {
+            rightHand.SetActive(false);
+        }
         else {
+
+            if (!rightHand.activeSelf) rightHand.SetActive(true);
+
             HandObjsSync(rhPoints, rightHandObjs);
             Vector3 rhoPos0 = rightHandObjs[0].transform.position;
             Vector3 rhoPos9 = rightHandObjs[9].transform.position;
