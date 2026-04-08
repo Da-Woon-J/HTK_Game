@@ -26,7 +26,7 @@ public class LeverController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(transform.localPosition.y);
+        //Debug.Log(transform.localPosition.y);
         if (transform.localPosition.y < minYPos + 0.7f)
         {
             isLeverDown = true;

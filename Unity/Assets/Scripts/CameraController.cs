@@ -31,16 +31,19 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         //Moving to right panel
-        if (htk.rhGesture == "'Grab'")
+
+        if (true)
         {
             cam.transform.position = Vector3.Lerp(cam.transform.position, rightPanelPos, Time.deltaTime * lerpScale);
             hands.transform.position = Vector3.Lerp(hands.transform.position, initHandsPos + offsetX, Time.deltaTime * lerpScale);
         }
+
         //Moving to center panel
-        if (htk.rhGesture == "'Pinch'")
-        {
-            cam.transform.position = Vector3.Lerp(cam.transform.position, centerPanelPos, Time.deltaTime * lerpScale);
-            hands.transform.position = Vector3.Lerp(hands.transform.position, initHandsPos, Time.deltaTime * lerpScale);
-        }
+
+        //if (htk.rhGesture == "'Pinch'")
+        //{
+        //    cam.transform.position = Vector3.Lerp(cam.transform.position, centerPanelPos, Time.deltaTime * lerpScale);
+        //    hands.transform.position = Vector3.Lerp(hands.transform.position, initHandsPos, Time.deltaTime * lerpScale);
+        //}
     }
 }
