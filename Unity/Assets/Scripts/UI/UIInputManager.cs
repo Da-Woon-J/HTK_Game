@@ -5,11 +5,17 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class UIInputManager : MonoBehaviour
+public class UIInputManager : UIManager
 {
+    public StageController stc;
+
     UIInput uiAction;
     InputAction clickAction;
     InputAction hoverAction;
+    InputAction quitAction;
+    InputAction pauseAction;
+    InputAction startAction;
+    InputAction debugSceneMoveAction;
 
     WaitForSeconds wait1sec = new WaitForSeconds(1);
     public bool debug = false;
@@ -18,17 +24,28 @@ public class UIInputManager : MonoBehaviour
         uiAction = new UIInput();
         clickAction = uiAction.UI.click;
         hoverAction = uiAction.UI.hover;
+        quitAction = uiAction.UI.DebugQuit;
+        pauseAction = uiAction.UI.DebugPause;
+        startAction = uiAction.UI.DebugStart;
+        debugSceneMoveAction = uiAction.UI.DebugCamMove;
     }
     void Start()
     {
         Debug.Log("UIInputManager started");
-
-        StartCoroutine(MousePos());
     }
 
     void Update()
     {
-        
+        if(startAction.WasPressedThisFrame())
+        {
+            Debug.Log(this + " :game started");
+            uiStageStarted = true;
+        }
+        if (debugSceneMoveAction.WasPressedThisFrame())
+        {
+            Debug.Log("debug scene move");
+            stc.debugStage += 1;
+        }
     }
     void OnEnable()
     {

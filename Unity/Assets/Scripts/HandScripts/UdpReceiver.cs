@@ -3,6 +3,7 @@ using System.Collections;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ public class UdpReceiver : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("start");
+        Debug.Log(this + "started");
         client = new UdpClient(50000);
         receiver = new IPEndPoint(IPAddress.Any, 0);
 

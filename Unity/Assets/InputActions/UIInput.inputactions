@@ -23,6 +23,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "DebugPause",
+                    "type": "Button",
+                    "id": "fda705cd-1da2-43a3-8932-c770bd499afc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DebugQuit",
+                    "type": "Button",
+                    "id": "2a0ec291-bc87-4aad-baac-24bd7c9ed088",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DebugStart",
+                    "type": "Button",
+                    "id": "2f4855a4-01e0-4fa6-a483-f49cbae982f0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DebugCamMove",
+                    "type": "Button",
+                    "id": "1522cb5d-7f90-4091-af20-2b3adec3131b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -67,6 +103,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "hover",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "da3fe5cb-3ea2-40d7-88b2-c6f99cce6844",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugPause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92107af0-2305-4435-9ab8-98a57d3a3ebb",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugQuit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7f31a2d-00ba-4a09-8314-a6ea89076600",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c2a1db5-e514-4c41-a78d-2e579a51c97f",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DebugCamMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

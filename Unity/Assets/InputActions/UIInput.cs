@@ -109,6 +109,42 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DebugPause"",
+                    ""type"": ""Button"",
+                    ""id"": ""fda705cd-1da2-43a3-8932-c770bd499afc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugQuit"",
+                    ""type"": ""Button"",
+                    ""id"": ""2a0ec291-bc87-4aad-baac-24bd7c9ed088"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugStart"",
+                    ""type"": ""Button"",
+                    ""id"": ""2f4855a4-01e0-4fa6-a483-f49cbae982f0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DebugCamMove"",
+                    ""type"": ""Button"",
+                    ""id"": ""1522cb5d-7f90-4091-af20-2b3adec3131b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -155,6 +191,50 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
                     ""action"": ""hover"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da3fe5cb-3ea2-40d7-88b2-c6f99cce6844"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugPause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92107af0-2305-4435-9ab8-98a57d3a3ebb"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugQuit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7f31a2d-00ba-4a09-8314-a6ea89076600"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugStart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c2a1db5-e514-4c41-a78d-2e579a51c97f"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DebugCamMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -182,6 +262,10 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_click = m_UI.FindAction("click", throwIfNotFound: true);
         m_UI_hover = m_UI.FindAction("hover", throwIfNotFound: true);
+        m_UI_DebugPause = m_UI.FindAction("DebugPause", throwIfNotFound: true);
+        m_UI_DebugQuit = m_UI.FindAction("DebugQuit", throwIfNotFound: true);
+        m_UI_DebugStart = m_UI.FindAction("DebugStart", throwIfNotFound: true);
+        m_UI_DebugCamMove = m_UI.FindAction("DebugCamMove", throwIfNotFound: true);
     }
 
     ~@UIInput()
@@ -264,6 +348,10 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_click;
     private readonly InputAction m_UI_hover;
+    private readonly InputAction m_UI_DebugPause;
+    private readonly InputAction m_UI_DebugQuit;
+    private readonly InputAction m_UI_DebugStart;
+    private readonly InputAction m_UI_DebugCamMove;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -283,6 +371,22 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/hover".
         /// </summary>
         public InputAction @hover => m_Wrapper.m_UI_hover;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/DebugPause".
+        /// </summary>
+        public InputAction @DebugPause => m_Wrapper.m_UI_DebugPause;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/DebugQuit".
+        /// </summary>
+        public InputAction @DebugQuit => m_Wrapper.m_UI_DebugQuit;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/DebugStart".
+        /// </summary>
+        public InputAction @DebugStart => m_Wrapper.m_UI_DebugStart;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/DebugCamMove".
+        /// </summary>
+        public InputAction @DebugCamMove => m_Wrapper.m_UI_DebugCamMove;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -315,6 +419,18 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
             @hover.started += instance.OnHover;
             @hover.performed += instance.OnHover;
             @hover.canceled += instance.OnHover;
+            @DebugPause.started += instance.OnDebugPause;
+            @DebugPause.performed += instance.OnDebugPause;
+            @DebugPause.canceled += instance.OnDebugPause;
+            @DebugQuit.started += instance.OnDebugQuit;
+            @DebugQuit.performed += instance.OnDebugQuit;
+            @DebugQuit.canceled += instance.OnDebugQuit;
+            @DebugStart.started += instance.OnDebugStart;
+            @DebugStart.performed += instance.OnDebugStart;
+            @DebugStart.canceled += instance.OnDebugStart;
+            @DebugCamMove.started += instance.OnDebugCamMove;
+            @DebugCamMove.performed += instance.OnDebugCamMove;
+            @DebugCamMove.canceled += instance.OnDebugCamMove;
         }
 
         /// <summary>
@@ -332,6 +448,18 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
             @hover.started -= instance.OnHover;
             @hover.performed -= instance.OnHover;
             @hover.canceled -= instance.OnHover;
+            @DebugPause.started -= instance.OnDebugPause;
+            @DebugPause.performed -= instance.OnDebugPause;
+            @DebugPause.canceled -= instance.OnDebugPause;
+            @DebugQuit.started -= instance.OnDebugQuit;
+            @DebugQuit.performed -= instance.OnDebugQuit;
+            @DebugQuit.canceled -= instance.OnDebugQuit;
+            @DebugStart.started -= instance.OnDebugStart;
+            @DebugStart.performed -= instance.OnDebugStart;
+            @DebugStart.canceled -= instance.OnDebugStart;
+            @DebugCamMove.started -= instance.OnDebugCamMove;
+            @DebugCamMove.performed -= instance.OnDebugCamMove;
+            @DebugCamMove.canceled -= instance.OnDebugCamMove;
         }
 
         /// <summary>
@@ -399,5 +527,33 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnHover(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DebugPause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDebugPause(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DebugQuit" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDebugQuit(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DebugStart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDebugStart(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DebugCamMove" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDebugCamMove(InputAction.CallbackContext context);
     }
 }
