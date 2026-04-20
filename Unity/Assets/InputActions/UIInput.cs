@@ -129,7 +129,7 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DebugStart"",
+                    ""name"": ""Confirm"",
                     ""type"": ""Button"",
                     ""id"": ""2f4855a4-01e0-4fa6-a483-f49cbae982f0"",
                     ""expectedControlType"": """",
@@ -141,6 +141,24 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
                     ""name"": ""DebugCamMove"",
                     ""type"": ""Button"",
                     ""id"": ""1522cb5d-7f90-4091-af20-2b3adec3131b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TerminalDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""4740977c-a7e8-4dc0-b91b-f6bfe7e12d3c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TerminalUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""e6a7ff55-90b3-47fd-aa8c-4414d2f54c19"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -206,7 +224,7 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""92107af0-2305-4435-9ab8-98a57d3a3ebb"",
-                    ""path"": ""<Keyboard>/p"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -221,7 +239,7 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""DebugStart"",
+                    ""action"": ""Confirm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -233,6 +251,28 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""DebugCamMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8123853e-8a36-43ef-8e61-e267ad43cd4e"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TerminalDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d45f6007-71f6-46fe-bced-07e73f973bbd"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TerminalUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -264,8 +304,10 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
         m_UI_hover = m_UI.FindAction("hover", throwIfNotFound: true);
         m_UI_DebugPause = m_UI.FindAction("DebugPause", throwIfNotFound: true);
         m_UI_DebugQuit = m_UI.FindAction("DebugQuit", throwIfNotFound: true);
-        m_UI_DebugStart = m_UI.FindAction("DebugStart", throwIfNotFound: true);
+        m_UI_Confirm = m_UI.FindAction("Confirm", throwIfNotFound: true);
         m_UI_DebugCamMove = m_UI.FindAction("DebugCamMove", throwIfNotFound: true);
+        m_UI_TerminalDown = m_UI.FindAction("TerminalDown", throwIfNotFound: true);
+        m_UI_TerminalUp = m_UI.FindAction("TerminalUp", throwIfNotFound: true);
     }
 
     ~@UIInput()
@@ -350,8 +392,10 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_hover;
     private readonly InputAction m_UI_DebugPause;
     private readonly InputAction m_UI_DebugQuit;
-    private readonly InputAction m_UI_DebugStart;
+    private readonly InputAction m_UI_Confirm;
     private readonly InputAction m_UI_DebugCamMove;
+    private readonly InputAction m_UI_TerminalDown;
+    private readonly InputAction m_UI_TerminalUp;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -380,13 +424,21 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @DebugQuit => m_Wrapper.m_UI_DebugQuit;
         /// <summary>
-        /// Provides access to the underlying input action "UI/DebugStart".
+        /// Provides access to the underlying input action "UI/Confirm".
         /// </summary>
-        public InputAction @DebugStart => m_Wrapper.m_UI_DebugStart;
+        public InputAction @Confirm => m_Wrapper.m_UI_Confirm;
         /// <summary>
         /// Provides access to the underlying input action "UI/DebugCamMove".
         /// </summary>
         public InputAction @DebugCamMove => m_Wrapper.m_UI_DebugCamMove;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/TerminalDown".
+        /// </summary>
+        public InputAction @TerminalDown => m_Wrapper.m_UI_TerminalDown;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/TerminalUp".
+        /// </summary>
+        public InputAction @TerminalUp => m_Wrapper.m_UI_TerminalUp;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -425,12 +477,18 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
             @DebugQuit.started += instance.OnDebugQuit;
             @DebugQuit.performed += instance.OnDebugQuit;
             @DebugQuit.canceled += instance.OnDebugQuit;
-            @DebugStart.started += instance.OnDebugStart;
-            @DebugStart.performed += instance.OnDebugStart;
-            @DebugStart.canceled += instance.OnDebugStart;
+            @Confirm.started += instance.OnConfirm;
+            @Confirm.performed += instance.OnConfirm;
+            @Confirm.canceled += instance.OnConfirm;
             @DebugCamMove.started += instance.OnDebugCamMove;
             @DebugCamMove.performed += instance.OnDebugCamMove;
             @DebugCamMove.canceled += instance.OnDebugCamMove;
+            @TerminalDown.started += instance.OnTerminalDown;
+            @TerminalDown.performed += instance.OnTerminalDown;
+            @TerminalDown.canceled += instance.OnTerminalDown;
+            @TerminalUp.started += instance.OnTerminalUp;
+            @TerminalUp.performed += instance.OnTerminalUp;
+            @TerminalUp.canceled += instance.OnTerminalUp;
         }
 
         /// <summary>
@@ -454,12 +512,18 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
             @DebugQuit.started -= instance.OnDebugQuit;
             @DebugQuit.performed -= instance.OnDebugQuit;
             @DebugQuit.canceled -= instance.OnDebugQuit;
-            @DebugStart.started -= instance.OnDebugStart;
-            @DebugStart.performed -= instance.OnDebugStart;
-            @DebugStart.canceled -= instance.OnDebugStart;
+            @Confirm.started -= instance.OnConfirm;
+            @Confirm.performed -= instance.OnConfirm;
+            @Confirm.canceled -= instance.OnConfirm;
             @DebugCamMove.started -= instance.OnDebugCamMove;
             @DebugCamMove.performed -= instance.OnDebugCamMove;
             @DebugCamMove.canceled -= instance.OnDebugCamMove;
+            @TerminalDown.started -= instance.OnTerminalDown;
+            @TerminalDown.performed -= instance.OnTerminalDown;
+            @TerminalDown.canceled -= instance.OnTerminalDown;
+            @TerminalUp.started -= instance.OnTerminalUp;
+            @TerminalUp.performed -= instance.OnTerminalUp;
+            @TerminalUp.canceled -= instance.OnTerminalUp;
         }
 
         /// <summary>
@@ -542,12 +606,12 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDebugQuit(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "DebugStart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Confirm" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDebugStart(InputAction.CallbackContext context);
+        void OnConfirm(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "DebugCamMove" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -555,5 +619,19 @@ public partial class @UIInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDebugCamMove(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "TerminalDown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTerminalDown(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "TerminalUp" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTerminalUp(InputAction.CallbackContext context);
     }
 }

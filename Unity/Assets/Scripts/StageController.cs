@@ -12,8 +12,8 @@ public class StageController : MonoBehaviour
     Transform valve;
     Transform button;
 
-    public int currentStage = 0;
-    public int debugStage = 0;
+    public int currentStage = -1;
+    public int debugStage = -1;
     void Start()
     {
         lever = Interactibles.transform.Find("Lever");
@@ -31,7 +31,6 @@ public class StageController : MonoBehaviour
     void DebugMainMenu()
     {
         Debug.Log("main menu on");
-
     }
     void DebugMoveCam()
     {
@@ -74,5 +73,4 @@ public class StageController : MonoBehaviour
     {
 
     }
-
 }

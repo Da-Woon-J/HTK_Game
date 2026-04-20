@@ -4170,8 +4170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TerminalBoot
   terminalText: {fileID: 1026760316}
-  uiim: {fileID: 1873780818}
-  stc: {fileID: 1519597239}
+  uiim: {fileID: 0}
+  isTerminalWriting: 0
 --- !u!1 &1059161327
 GameObject:
   m_ObjectHideFlags: 0
@@ -6121,7 +6121,7 @@ Transform:
   m_GameObject: {fileID: 1594892356}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 20.25, y: 0.03, z: 5}
+  m_LocalPosition: {x: 20, y: -0.05, z: 5}
   m_LocalScale: {x: 8, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6768,6 +6768,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIInputManager
   optionsPanel: {fileID: 0}
   stc: {fileID: 1519597239}
+  terminalUp:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 2d8a08a4-1b92-48f8-b747-dc3f1be9d753
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  terminalDown:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 75f41845-4761-4991-9d17-dcaf8fbef1a1
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   debug: 0
   isPaused: 0
 --- !u!1 &1888532904

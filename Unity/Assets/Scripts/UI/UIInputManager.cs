@@ -9,16 +9,22 @@ public class UIInputManager : UIManager
 {
     public StageController stc;
 
-    UIInput uiAction;
+    public UIInput uiAction;
     InputAction clickAction;
     InputAction hoverAction;
     InputAction quitAction;
     InputAction pauseAction;
-    InputAction startAction;
     InputAction debugSceneMoveAction;
+    [NonSerialized] public InputAction confirm;
+    [NonSerialized] public InputAction terminalUp;
+    [NonSerialized] public InputAction terminalDown;
 
     WaitForSeconds wait1sec = new WaitForSeconds(1);
+
     public bool debug = false;
+
+    public bool isPaused = false;
+
     void Awake()
     {
         uiAction = new UIInput();
@@ -26,35 +32,72 @@ public class UIInputManager : UIManager
         hoverAction = uiAction.UI.hover;
         quitAction = uiAction.UI.DebugQuit;
         pauseAction = uiAction.UI.DebugPause;
-        startAction = uiAction.UI.DebugStart;
+        confirm = uiAction.UI.Confirm;
         debugSceneMoveAction = uiAction.UI.DebugCamMove;
+        terminalUp = uiAction.UI.TerminalUp;
+        terminalDown = uiAction.UI.TerminalDown;
     }
     void Start()
     {
-        Debug.Log("UIInputManager started");
-    }
-
-    void Update()
-    {
-        if(startAction.WasPressedThisFrame())
-        {
-            Debug.Log(this + " :game started");
-            uiStageStarted = true;
-        }
-        if (debugSceneMoveAction.WasPressedThisFrame())
-        {
-            Debug.Log("debug scene move");
-            stc.debugStage += 1;
-        }
-    }
-    void OnEnable()
-    {
         uiAction.Enable();
     }
-
-    private void OnDisable()
+    void Update()
     {
-        uiAction.Disable();
+        DebugUIActions();
+    }
+
+    void DebugUIActions()
+    {
+        if (debugSceneMoveAction.WasPressedThisFrame())
+        {
+            DebugSceneMove();
+        }
+
+        if (pauseAction.WasPressedThisFrame())
+        {
+            PauseGame();
+        }
+        if (quitAction.WasPressedThisFrame())
+        {
+            QuitGame();
+        }
+
+    }
+
+    void StartGame()
+    {
+        Debug.Log(this + " :game started");
+        uiStageStarted = true;
+    }
+
+    void DebugSceneMove()
+    {
+        Debug.Log("debug scene move");
+        stc.debugStage += 1;
+    }
+
+    void QuitGame()
+    {
+#if UNITY_EDITOR
+
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+
+    }
+
+    void PauseGame()
+    {
+        if (isPaused == true)
+        {
+            Time.timeScale = 1;
+            isPaused = false;
+            return;
+        }
+
+        Time.timeScale = 0;
+        isPaused = true;
     }
 
     private IEnumerator MousePos()
@@ -71,4 +114,5 @@ public class UIInputManager : UIManager
             yield return null;
         }
     }
+
 }

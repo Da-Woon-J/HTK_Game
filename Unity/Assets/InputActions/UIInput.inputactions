@@ -43,7 +43,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DebugStart",
+                    "name": "Confirm",
                     "type": "Button",
                     "id": "2f4855a4-01e0-4fa6-a483-f49cbae982f0",
                     "expectedControlType": "",
@@ -55,6 +55,24 @@
                     "name": "DebugCamMove",
                     "type": "Button",
                     "id": "1522cb5d-7f90-4091-af20-2b3adec3131b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TerminalDown",
+                    "type": "Button",
+                    "id": "4740977c-a7e8-4dc0-b91b-f6bfe7e12d3c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TerminalUp",
+                    "type": "Button",
+                    "id": "e6a7ff55-90b3-47fd-aa8c-4414d2f54c19",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -120,7 +138,7 @@
                 {
                     "name": "",
                     "id": "92107af0-2305-4435-9ab8-98a57d3a3ebb",
-                    "path": "<Keyboard>/p",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -135,7 +153,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "DebugStart",
+                    "action": "Confirm",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -147,6 +165,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "DebugCamMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8123853e-8a36-43ef-8e61-e267ad43cd4e",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TerminalDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d45f6007-71f6-46fe-bced-07e73f973bbd",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TerminalUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
