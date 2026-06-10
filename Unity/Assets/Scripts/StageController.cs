@@ -12,6 +12,8 @@ public class StageController : MonoBehaviour
     Transform valve;
     Transform button;
 
+    public int currentScore = 0;
+
     public int currentStage = -1;
     public int debugStage = -1;
     void Start()
@@ -25,7 +27,7 @@ public class StageController : MonoBehaviour
     }
     private void Update()
     {
-        DebugMoveCam();
+
     }
 
     void DebugMainMenu()

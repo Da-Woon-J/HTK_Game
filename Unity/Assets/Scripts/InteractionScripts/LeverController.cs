@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class LeverController : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class LeverController : MonoBehaviour
     string lhGesture;
     string rhGesture;
     //내부에서 쓸 변수
+
+    private bool isActive = false;
+
     Collider rmdpCollider;
     Collider lmdpCollider;
     void Start()
@@ -31,6 +35,27 @@ public class LeverController : MonoBehaviour
         {
             isLeverDown = true;
             Debug.Log("Lever is Down");
+        }
+        else
+        {
+            isLeverDown = false;
+        }
+        //액티브 상태면 콜라이더 벗어나도 계속 따라옴 기모찌
+        if (isActive && htk.rhGesture == "'Grab'")
+        {
+            LeverLogic(rmdpCollider);
+        }
+        else
+        {
+            isActive = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (htk.rhGesture == "'Grab'")
+        {
+            isActive = true;
         }
     }
 
@@ -51,8 +76,7 @@ public class LeverController : MonoBehaviour
         Vector3 op = collider.transform.position;
         Vector3 localPos = transform.parent.InverseTransformPoint(op);
         float constY = Mathf.Clamp(localPos.y, minYPos, maxYPos);
-        float smoothY = Mathf.Lerp(transform.localPosition.y, constY, Time.deltaTime * 10f);
 
-        transform.localPosition = new Vector3(transform.localPosition.x, smoothY, transform.localPosition.z);
+        transform.localPosition = new Vector3(transform.localPosition.x, constY, transform.localPosition.z);
     }
 }

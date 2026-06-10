@@ -31,13 +31,12 @@ public class TerminalController : MonoBehaviour
         lastCursorIndex = 0;
     }
 
-    void Start()
+    private void Update()
     {
-        StartCoroutine(BootSequence());
-        StartCoroutine(CursorIdle());
+        UpdateTerminal();
     }
 
-    private void Update()
+    void Loop()
     {
         if (uiim.terminalUp.WasPressedThisFrame())
         {
@@ -50,7 +49,7 @@ public class TerminalController : MonoBehaviour
         if (uiim.confirm.WasPressedThisFrame())
         {
             if (isTerminalWriting) return;
-            switch(menuNum)
+            switch (menuNum)
             {
                 case 1:
                     StartCoroutine(NewGameTerminal());
@@ -130,6 +129,11 @@ public class TerminalController : MonoBehaviour
             terminalText.text = String.Join("\n", textLines);
             yield return wait05;
         }
+    }
+
+    void UpdateTerminal()
+    {
+        terminalText.text = "점수:" + stc.currentScore;
     }
 
     IEnumerator BootSequence()
