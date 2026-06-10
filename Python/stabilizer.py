@@ -17,18 +17,18 @@ class VectorStabilizer:
 
         total_distance = 0.0
 
-        # 21개 랜드마크의 이동 거리 계산 (기존 vector.py 활용)
+        # 21개 랜드마크의 이동 거리 계산
         for curr, prev in zip(current_lm, self.prev_lm):
             total_distance += vector.Euclidean_Dis(curr, prev)
 
         # 랜드마크 평균 이동 거리
         avg_distance = total_distance / len(current_lm)
 
-        # 1. 작은 움직임 무시 (Deadzone)
+        # Deadzone
         if avg_distance < self.threshold:
             return self.prev_lm
 
-        # 2. 임계값 이상 움직였으면 보간하여 부드럽게 업데이트 (EMA Filter)
+        # 임계값 이상 움직였으면 보간하여 부드럽게 업데이트
         stabilized_lm = []
         for curr, prev in zip(current_lm, self.prev_lm):
             new_x = prev[0] + (curr[0] - prev[0]) * self.smoothing

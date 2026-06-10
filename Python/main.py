@@ -3,40 +3,58 @@ from cvzone.HandTrackingModule import HandDetector
 import udp_socket
 import gesture
 import normalization
+from stabilizer import VectorStabilizer
 
 cap = cv2.VideoCapture(0)
 
-# htk 초기화
 detector = HandDetector(maxHands=2, detectionCon=0.8)
+
+stabilizers = {
+    'Left': VectorStabilizer(threshold=3.0, smoothing=0.6),
+    'Right': VectorStabilizer(threshold=3.0, smoothing=0.6)
+}
+
+GAIN = 2.0 
 
 while True:
     success, img = cap.read()
 
-    # 캠을 읽어오지 못했을 때
     if not success:
         print("캠 신호 x, 연결을 확인하세요.")
         break
 
-    # Hands 감지
+    h, w, _ = img.shape
+    cx, cy = w // 2, h // 2
+
     hands, img = detector.findHands(img)
 
     data = []
 
-
     if hands:
-        hand_0 = hands[0]
-        lm_0 = normalization.Normalize(hand_0['lmList'])
-        # lm_0 = hand_0['lmList']
-        type_0 = hand_0['type']
-        gesture_0 = gesture.gestures(lm_0)
-        data.extend([lm_0,type_0,gesture_0])
-        if len(hands) == 2:
-            hand_1 = hands[1]
-            lm_1 = normalization.Normalize(hand_1['lmList'])
-            # lm_1 = hand_1['lmList']
-            type_1 = hand_1['type']
-            gesture_1 = gesture.gestures(lm_1)
-            data.extend([lm_1,type_1,gesture_1])
+        for hand in hands:
+            hand_type = hand['type']
+            lm_normalized = normalization.Normalize(hand['lmList'])
+            lm_stabilized = stabilizers[hand_type].update(lm_normalized)
+            hand_gesture = gesture.gestures(lm_stabilized)   
+
+            wrist = lm_stabilized[0]
+
+            gained_wrist_x = cx + (wrist[0] - cx) * GAIN
+            gained_wrist_y = cy + (wrist[1] - cy) * GAIN
+            gained_wrist_z = wrist[2] * GAIN
+            lm_gained = []
+            for lm in lm_stabilized:
+                offset_x = lm[0] - wrist[0]
+                offset_y = lm[1] - wrist[1]
+                offset_z = lm[2] - wrist[2]
+                
+                lm_gained.append([
+                    gained_wrist_x + offset_x,
+                    gained_wrist_y + offset_y,
+                    gained_wrist_z + offset_z
+                ])
+            
+            data.extend([lm_gained, hand_type, hand_gesture])
 
     print(data)
     udp_socket.send_udp(data)
@@ -47,4 +65,4 @@ while True:
         break
 
 cap.release()
-cv2.destroyAllWindows()      
+cv2.destroyAllWindows()
