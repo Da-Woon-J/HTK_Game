@@ -7,6 +7,7 @@ from stabilizer import VectorStabilizer
 
 cap = cv2.VideoCapture(0)
 
+
 detector = HandDetector(maxHands=2, detectionCon=0.8)
 
 stabilizers = {
