@@ -10,26 +10,73 @@ public class StageController : MonoBehaviour
     public GameObject Interactibles;
     Transform lever;
     Transform valve;
-    Transform button;
+    Transform rButton;
+    Transform bButton;
 
+    //현재 점수
+    [NonSerialized]
     public int currentScore = 0;
 
-    public int currentStage = -1;
+    //유저 입력
+    [NonSerialized]
+    public string userInput;
+
+    //게임 상태
+    [NonSerialized]
+    public bool isGameStarted = false;
+    public bool isGameQuit = false;
+    public bool isTimeOver = false;
+    public bool isQuitCheck = false;
+
     public int debugStage = -1;
     void Start()
     {
         lever = Interactibles.transform.Find("Lever");
         valve = Interactibles.transform.Find("Valve");
-        button = Interactibles.transform.Find("TestButton");
+        rButton = Interactibles.transform.Find("RedButton");
+        bButton = Interactibles.transform.Find("BlueButton");
 
         Debug.Log("stagecontroller started");
         DebugMainMenu();
     }
     private void Update()
     {
-
+        UpdateStage();
     }
 
+    void UpdateStage()
+    {
+        if (userInput == "GreenButton" && !isGameStarted && !isTimeOver && !isQuitCheck) //게임시작 조건
+        {
+            currentScore = 0;
+            userInput = ""; //초기화
+            isGameStarted = true;
+        }
+
+        if (userInput == "RedButton" && !isGameStarted && !isTimeOver) //게임나가는 조건
+        {
+            userInput = "";
+            isQuitCheck = true;  
+        }
+
+        if (userInput == "RedButton" && !isGameStarted && isQuitCheck)
+        {
+            Debug.Log("애플리케이션을 종료한다.");
+            Application.Quit();
+        }
+
+        if (userInput == "GreenButton" && !isGameStarted && isQuitCheck)
+        {
+            userInput = "";
+            isQuitCheck = false;
+        }
+
+        if (isTimeOver)
+        {
+            isGameStarted = false;
+            isTimeOver = false; //초기화
+        }
+    }
     void DebugMainMenu()
     {
         Debug.Log("main menu on");
@@ -43,7 +90,7 @@ public class StageController : MonoBehaviour
 
         if (debugStage % 3 == 1)
         {
-            camc.DebugCamMove(button);
+            camc.DebugCamMove(rButton);
         }
 
         if (debugStage % 3 == 2)
@@ -51,28 +98,4 @@ public class StageController : MonoBehaviour
             camc.DebugCamMove(valve);
         }
     }
-
-    void DebugPauseMenu()
-    {
-
-    }
-
-    void StageSelector()
-    {
-        Debug.Log("current stage:" + currentStage);
-
-        if (currentStage == 0)
-        {
-            Debug.Log("clear tutorial to pass stage");
-        }
-
-        if (currentStage == 1)
-        {
-            Stage1();
-        }
-    }
-    void Stage1()
-    {
-
-    }
-}
+} 

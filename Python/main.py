@@ -15,7 +15,7 @@ stabilizers = {
     'Right': VectorStabilizer(threshold=3.0, smoothing=0.6)
 }
 
-GAIN = 2.0 
+GAIN = 5.0 
 
 while True:
     success, img = cap.read()

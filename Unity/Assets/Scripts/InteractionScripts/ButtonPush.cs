@@ -7,6 +7,8 @@ using UnityEngine.Accessibility;
 
 public class ButtonPush : MonoBehaviour
 {
+    public StageController stc;
+
     public GameObject indexTip;
     SphereCollider idtCollider;
 
@@ -25,12 +27,15 @@ public class ButtonPush : MonoBehaviour
         endPos = new Vector3(transform.position.x, transform.position.y - buttonDepth, transform.position.z);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision) //버튼 접촉 = 버튼 눌림
     {
         if (collision.collider == idtCollider)
         {
             if (activeRoutine != null) StopCoroutine(activeRoutine);
             activeRoutine = StartCoroutine(PushAnimation());
+
+            stc.userInput = this.name;
+            Debug.Log(this.name);
         }
     }
 

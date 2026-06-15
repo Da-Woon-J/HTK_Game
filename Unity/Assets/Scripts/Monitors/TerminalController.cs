@@ -15,6 +15,10 @@ public class TerminalController : MonoBehaviour
 
     [NonSerialized] public bool isTerminalWriting = false;
 
+    const int kTimeLimit = 10;
+
+    public int timeLeft = kTimeLimit;
+
     string[] textLines; //슬라이싱한 문자열을 배열 형태로 다시 저장한다.
     string originalText; //커서를 추가하기 전의 문자열을 저장한다.
     int menuNum; //메뉴 번호를 저장한다.
@@ -30,12 +34,62 @@ public class TerminalController : MonoBehaviour
         menuNum = 0;
         lastCursorIndex = 0;
     }
+    private void Start()
+    {
+        StartCoroutine(UpdateTime());
+    }
 
     private void Update()
     {
         UpdateTerminal();
     }
 
+    void UpdateTerminal()
+    {
+        if (stc.isGameStarted)
+        {
+            terminalText.fontSize = 16f;
+            terminalText.text = "점수: " + stc.currentScore + "\n" + "남은 시간: " + timeLeft + "\n" + "밸브는 시계방향으로.";
+        }
+        else if(stc.isQuitCheck)
+        {
+            terminalText.fontSize = 16f;
+            terminalText.text = "정말 나가시겠습니까?\n붉은 버튼을 한번 더 눌러 종료합니다.";
+        }
+        else
+        {
+            terminalText.fontSize = 14f;
+            terminalText.text = "최고점수: " + stc.currentScore + "\n\n초록 버튼을 눌러 게임 시작.\n\n붉은 버튼을 눌러 게임 종료.";
+        }
+    }
+
+    IEnumerator UpdateTime()
+    {
+        while (true)
+        {
+            if (timeLeft <= 0)
+            {
+                //시간이 다 지났으므로 시간을 초기화해준다
+                Debug.Log("시간다됐다.");
+                timeLeft = kTimeLimit;
+
+                stc.userInput = ""; //몰라 씨발 싹다 초기화해
+                stc.isGameStarted = false;
+                stc.isTimeOver = true;
+
+                yield return new WaitForSeconds(1f);
+            }
+
+            if (!stc.isGameStarted)
+            {
+                yield return null;
+                continue;
+            }
+
+            yield return new WaitForSeconds(1f);
+            timeLeft -= 1;
+        }
+    }
     void Loop()
     {
         if (uiim.terminalUp.WasPressedThisFrame())
@@ -131,11 +185,9 @@ public class TerminalController : MonoBehaviour
         }
     }
 
-    void UpdateTerminal()
-    {
-        terminalText.text = "점수:" + stc.currentScore;
-    }
 
+
+    //이 밑으로는 구버전이다.
     IEnumerator BootSequence()
     {
         isTerminalWriting=true;
@@ -167,7 +219,6 @@ public class TerminalController : MonoBehaviour
     IEnumerator NewGameTerminal()
     {
         string text = "게임을 시작합니다..\n\n";
-        stc.currentStage = 0;
         yield return InitTerminal(text);
     }
 

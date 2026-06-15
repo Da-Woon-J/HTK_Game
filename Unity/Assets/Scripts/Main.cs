@@ -14,6 +14,7 @@ public class Main : MonoBehaviour
     WaitForSeconds WaitOneSec = new WaitForSeconds(1);
     void Start()
     {
+        StartCoroutine(BootHtkPy());
         StartCoroutine(MainLoop());
     }
 
@@ -34,7 +35,7 @@ public class Main : MonoBehaviour
     {
         ProcessStartInfo htk = new ProcessStartInfo();
         string pythonPath = "D:\\PycharmFiles\\HandTracking_Pycharm\\.venv2\\Scripts\\python.exe";
-        string scriptPath = "D:\\HtkProjectMain\\Python\\htk_cam.py";
+        string scriptPath = "D:\\HtkProjectMain\\Python\\main.py";
 
         htk.FileName = pythonPath;
         htk.Arguments = scriptPath;

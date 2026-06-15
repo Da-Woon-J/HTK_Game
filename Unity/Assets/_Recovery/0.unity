@@ -4470,7 +4470,6 @@ MonoBehaviour:
   terminalText: {fileID: 1026760316}
   uiim: {fileID: 1873780818}
   stc: {fileID: 1519597239}
-  timeLeft: 10
 --- !u!1 &1059161327
 GameObject:
   m_ObjectHideFlags: 0
@@ -6574,8 +6573,6 @@ MonoBehaviour:
   camc: {fileID: 1519597238}
   Interactibles: {fileID: 948293217}
   isGameQuit: 0
-  isTimeOver: 0
-  isQuitCheck: 0
   debugStage: 0
 --- !u!1 &1581714226
 GameObject:

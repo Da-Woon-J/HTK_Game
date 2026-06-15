@@ -4,7 +4,9 @@ using UnityEngine.UIElements;
 
 public class LeverController : MonoBehaviour
 {
+    public StageController stc;
     public HandTracking htk;
+
     public GameObject rmdp;
     public GameObject lmdp;
     //최대 y값과 최소 y값이다.
@@ -35,6 +37,7 @@ public class LeverController : MonoBehaviour
         {
             isLeverDown = true;
             Debug.Log("Lever is Down");
+            stc.userInput = "LeverDown";
         }
         else
         {
@@ -69,6 +72,11 @@ public class LeverController : MonoBehaviour
         {
             LeverLogic(lmdpCollider);
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        transform.localPosition = new Vector3(transform.localPosition.x, maxYPos-0.2f, transform.localPosition.z); //초기화
     }
 
     void LeverLogic(Collider collider)
