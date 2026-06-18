@@ -4470,7 +4470,7 @@ MonoBehaviour:
   terminalText: {fileID: 1026760316}
   uiim: {fileID: 1873780818}
   stc: {fileID: 1519597239}
-  timeLeft: 10
+  timeLeft: 20
 --- !u!1 &1059161327
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class Main : MonoBehaviour
 
     IEnumerator MainLoop()
     {
-        //yield return BootHtkPy();
+        yield return BootHtkPy();
         //파이썬 같이실행, 빌드할때만 쓰는걸루 로딩 오래걸려
 
         while (true)
@@ -35,7 +35,7 @@ public class Main : MonoBehaviour
     {
         ProcessStartInfo htk = new ProcessStartInfo();
         string pythonPath = "D:\\PycharmFiles\\HandTracking_Pycharm\\.venv2\\Scripts\\python.exe";
-        string scriptPath = "D:\\HtkProjectMain\\Python\\main.py";
+        string scriptPath = "D:\\HtkProjectMain\\Python\\src\\main.py";
 
         htk.FileName = pythonPath;
         htk.Arguments = scriptPath;

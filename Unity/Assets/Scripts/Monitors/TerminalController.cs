@@ -48,7 +48,7 @@ public class TerminalController : MonoBehaviour
     {
         if (stc.isGameStarted)
         {
-            terminalText.fontSize = 16f;
+            terminalText.fontSize = 14f;
             terminalText.text = "점수: " + stc.currentScore + "\n" + "남은 시간: " + timeLeft + "\n" + "밸브는 시계방향으로.";
         }
         else if(stc.isQuitCheck)
